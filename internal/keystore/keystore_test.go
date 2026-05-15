@@ -92,3 +92,14 @@ func TestSaveCreatesDir(t *testing.T) {
 		t.Errorf("file not created: %v", err)
 	}
 }
+
+func TestPublicKeysOrder(t *testing.T) {
+	path := tempPath(t)
+	ks, _ := keystore.Load(path)
+	ks.Add("alice", "age1alice")
+	ks.Add("bob", "age1bob")
+	keys := ks.PublicKeys()
+	if keys[0] != "age1alice" || keys[1] != "age1bob" {
+		t.Errorf("unexpected key order: %v", keys)
+	}
+}
